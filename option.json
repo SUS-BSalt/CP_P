@@ -1,0 +1,42 @@
+{
+    "sysSettings": {
+
+        "logicLoopFps": 50,
+
+        "drawLoopFps" : 50,
+
+        "animateLoopFps" : 50
+    },
+
+
+    "keyboardSettings": {
+    
+        "autoPlay": "p" ,
+        
+        "quickSave": "s",
+        
+        "skip": "left ctrl"
+        
+    }
+    ,
+    "textSettings": {
+
+        "printSpeed":0.1,
+
+        "textLineGap":18,
+
+        "textColor": [255,255,255],
+
+        "charType": "source/font/bb4171.ttf",
+
+        "textSize": 30,
+
+        "charBlodType": "source/font/bb4171.ttf",
+
+        "textBlodSize": 50,
+
+        "margins": 60
+
+
+    }
+}
