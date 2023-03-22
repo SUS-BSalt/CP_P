@@ -23,9 +23,13 @@ class MainGame:
     def logicLoop(self):
         """#逻辑循环，包括控制逻辑与动画"""
         self.logicLoopclock = pygame.time.Clock()
-
+        self.timer = 0
         while GV.sysSymbol.get("gameRun"):
             #循环本体
+            self.timer += 1
+            if self.timer >= 50:
+                print(self.logicLoopclock.get_fps())
+                self.timer = 0
             self.logicLoopclock.tick(GV.settings.logicLoopFps)
             #保持循环的fps
             

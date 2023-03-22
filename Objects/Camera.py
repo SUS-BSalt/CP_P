@@ -15,11 +15,9 @@ class Camera:
 
     def focalOn(self,focalPointLoc):
         self.loc = [(focalPointLoc[0]-(self.size[0])/2), (focalPointLoc[1]-(self.size[1]/2))]
-        GV.sysSymbol.set("scenceUpdateSym",True)
 
     def updateCameraLoc(self,rectify):
         self.loc = [self.loc[0]+rectify[0],self.loc[1]+rectify[1]]
-        GV.sysSymbol.set("scenceUpdateSym",True)
 
     def draw(self,vision,objLocOnPlayGround):
         self.cameraShot.blit(vision,(objLocOnPlayGround[0] - self.loc[0],objLocOnPlayGround[1] - self.loc[1]))
