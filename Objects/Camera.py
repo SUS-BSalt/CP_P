@@ -4,6 +4,8 @@ import pygame
 class Camera:
     def __init__(self):
         self.loc = [0,0]
+        self.cameraLocOnThatFrame = (0,0)
+        """多线程，将会出现画面还没更新完毕摄像机位置又改了的情况，故需要这个中介保证每一帧绘制时摄像机位置不变"""
         self.tempCupForCameraLoc = [0,0]
         self.size = [1280,720]
         self.cameraShot = pygame.Surface(self.size)
@@ -20,7 +22,7 @@ class Camera:
         self.loc = [self.loc[0]+rectify[0],self.loc[1]+rectify[1]]
 
     def draw(self,vision,objLocOnPlayGround):
-        self.cameraShot.blit(vision,(objLocOnPlayGround[0] - self.loc[0],objLocOnPlayGround[1] - self.loc[1]))
+        self.cameraShot.blit(vision,(objLocOnPlayGround[0] - self.cameraLocOnThatFrame[0],objLocOnPlayGround[1] - self.cameraLocOnThatFrame[1]))
 
     def getMousePos(self):
         mousePosX = (pygame.mouse.get_pos()[0] + self.loc[0] - self.cameraLocRectify[0])/self.cameraScaleIndex

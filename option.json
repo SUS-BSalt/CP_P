@@ -3,9 +3,9 @@
 
         "logicLoopFps": 50,
 
-        "drawLoopFps" : 50,
+        "drawLoopFps" : 30,
 
-        "animateLoopFps" : 50
+        "animateLoopFps" : 30
     },
 
 
