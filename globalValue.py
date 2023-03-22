@@ -1,6 +1,7 @@
 import pygame
 import setting
-import Objects.Scence as Scence
+import Objects.Camera
+import Objects.Scence
 
 settings = setting.Settings()
 keyboardSettings = setting.KeyboardSettings()
@@ -49,52 +50,7 @@ toDoList = []
 controller = None
 
 
-class Camera:
-    def __init__(self):
-        self.loc = [0,0]
-        self.tempCupForCameraLoc = [0,0]
-        self.size = [1280,720]
-        self.cameraShot = pygame.Surface(self.size)
 
-        self.cameraLocRectify = [0,0]
-        self.cameraScaleIndex = settings.windowsize[0] / settings.org_windowsize[0]
-        """windowSize / org_windowsize"""
-        self.mousePos = (0,0)
 
-    def focalOn(self,focalPointLoc):
-        self.loc = [(focalPointLoc[0]-(self.size[0])/2), (focalPointLoc[1]-(self.size[1]/2))]
-        scence.update(self.loc)
-
-    def updateCameraLoc(self,rectify):
-        self.loc = [self.loc[0]+rectify[0],self.loc[1]+rectify[1]]
-        scence.update(self.loc)
-
-    def draw(self,vision,objLocOnPlayGround):
-        self.cameraShot.blit(vision,(objLocOnPlayGround[0] - self.loc[0],objLocOnPlayGround[1] - self.loc[1]))
-
-    def getMousePos(self):
-        mousePosX = (pygame.mouse.get_pos()[0] + self.loc[0] - self.cameraLocRectify[0])/self.cameraScaleIndex
-        mousePosY = (pygame.mouse.get_pos()[1] + self.loc[1] - self.cameraLocRectify[1])/self.cameraScaleIndex
-        self.mousePos = (mousePosX, mousePosY)
-        return(mousePosX, mousePosY)
-    
-    def mousePosCheck(self,rect):
-        if self.mousePos[0] > rect[0] and self.mousePos[1] > rect[1] \
-        and self.mousePos[0] < rect[0]+rect[2] and self.mousePos[1] < rect[1]+rect[3]:
-            return True
-        else:
-            return False
-        
-    def resetWindow(self,event):
-        if event.x/event.y > settings.org_windowsize[0]/settings.org_windowsize[1]:
-            settings.windowsize = ((settings.org_windowsize[0]/settings.org_windowsize[1])*event.y,event.y)
-            self.cameraScaleIndex = event.y / settings.org_windowsize[1]
-        else:
-            settings.windowsize = (event.x,event.x/(settings.org_windowsize[0]/settings.org_windowsize[1]))
-            self.cameraScaleIndex = event.x / settings.org_windowsize[0]
-        #更新摄像机修正位置
-        self.cameraLocRectify = [(event.x-settings.windowsize[0])/2,(event.y-settings.windowsize[1])/2]
-        screen.fill((0,0,0))
-
-camera = Camera()
-scence = Scence.Scence()
+camera = Objects.Camera.Camera()
+scence = Objects.Scence.Scence()
