@@ -22,7 +22,7 @@ class GlobalValue:
     def set(self, name, value):
         self.content[name] = value
     
-    def get(self, name, default=None):
+    def get(self, name, default=False):
         try:
             return self.content[name]
         except:

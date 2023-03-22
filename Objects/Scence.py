@@ -14,9 +14,16 @@ class Scence:
         for obj in self.objList:
             obj.animate()
     def update(self,cameraLoc):
-        for obj in self.objList:
-            obj.update(cameraLoc)
-        pass
+        tempLocContainer = tuple(cameraLoc)
+        #画面出现跳闪的本质原因便是：只有部分的obj完成更新时，camera的位置改变了，导致之后的obj根据新的loc进行更新
+        # 故必须用一个新容器来把传入的loc固定住，因为python语言的特性，传入给函数的值永远是其指针，不能自行控制，真不方便！
+        if GV.sysSymbol.get("scenceUpdateSym"):
+            for obj in self.objList:
+                obj.update(tempLocContainer)
+            GV.sysSymbol.set("scenceUpdateSym",False)
+        
+
+
 
 class BackgroundImage:
     def __init__(self,loc,size,vision,movingSpeed):

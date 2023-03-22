@@ -31,8 +31,8 @@ class Player:
 
         self.walking = Walking(self)
         self.walkingToLeft = Walking(self).changeFaceSides()
-        self.cameraMovingSpeed = 5
-        self.cameraMovingSpeedToLeft = -5
+        self.cameraMovingSpeed = 3.25
+        self.cameraMovingSpeedToLeft = -3.25
 
         self.normalAttack = NormalAttack(self)
         self.normalAttackToLeft = NormalAttack(self)
@@ -47,11 +47,34 @@ class Player:
     def init(self):
         self.inputList.clear()
 
+    def cameraTracking(self):
+        if self.cameraIsNotCenterSym:
+            if self.loc[0] > (GV.camera.loc[0] + 680):
+                GV.camera.updateCameraLoc([10,0])
+            elif self.loc[0] < (GV.camera.loc[0] + 600):
+                GV.camera.updateCameraLoc([-10,0])
+            else:
+                self.cameraIsNotCenterSym = False
+
+        elif self.loc[0] > (GV.camera.loc[0] + 800) or self.loc[0] < (GV.camera.loc[0] + 480):
+            self.cameraIsNotCenterSym = True
+
+        elif self.currentAction == self.standing:
+            pass
+        
+        elif self.rightMoveSymbol:
+            GV.camera.updateCameraLoc([self.cameraMovingSpeed,0])
+
+        elif self.leftMoveSymbol:
+            GV.camera.updateCameraLoc([self.cameraMovingSpeedToLeft,0])
+
+
     def act(self):
         #只认可最新输入的两个指令
         #节奏的判定
         #当其执行攻击或防御时，传递一个打击的事件，让上层的模组去读取。
         #print(self.loc,GV.camera.getMousePos())
+        self.cameraTracking()
         if self.beHitSymbol == True:
             #被打中时
             pass
@@ -80,27 +103,6 @@ class Player:
 
         
     def draw(self):
-        if self.cameraIsNotCenterSym:
-            if self.loc[0] > (GV.camera.loc[0] + 680):
-                GV.camera.updateCameraLoc([10,0])
-            elif self.loc[0] < (GV.camera.loc[0] + 600):
-                GV.camera.updateCameraLoc([-10,0])
-            else:
-                self.cameraIsNotCenterSym = False
-
-        elif self.loc[0] > (GV.camera.loc[0] + 800) or self.loc[0] < (GV.camera.loc[0] + 480):
-            self.cameraIsNotCenterSym = True
-
-        elif self.currentAction == self.standing:
-            pass
-        
-        elif self.rightMoveSymbol:
-            GV.camera.updateCameraLoc([self.cameraMovingSpeed,0])
-
-        elif self.leftMoveSymbol:
-            GV.camera.updateCameraLoc([self.cameraMovingSpeedToLeft,0])
-
-        
         GV.camera.draw(self.currentAction.vision,self.currentAction.picLoc)
 
         pass

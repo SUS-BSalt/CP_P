@@ -93,12 +93,14 @@ class ACTModule:
         
         pass
     def draw(self):
+        
         GV.scence.draw()
         GV.camera.draw(self.player.redPoint, self.player.loc)
         self.player.draw()
 
         
     def animate(self):
+        GV.scence.update(GV.camera.loc)
         pass
         #print(self.camera.loc)
         #self.player.animate()
