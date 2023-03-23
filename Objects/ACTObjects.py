@@ -10,7 +10,7 @@ class ACTModule:
         self.enemyList = []
 
         self.timer = 0
-        self.player = ACTPlayer.Player([720,363])
+        self.player = ACTPlayer.Player([1300,363])
 
         self.playGround = pygame.Surface((640,360))
 

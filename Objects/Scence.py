@@ -26,9 +26,7 @@ class Scence:
                 obj.update(self.tempCameraLocContainer)
         
 
-
-
-class BackgroundImage:
+class Plane:
     def __init__(self,loc,size,vision,movingSpeed):
         self.loc = loc
         self.org_loc = tuple(loc)
@@ -43,21 +41,6 @@ class BackgroundImage:
         pass
     def update(self,cameraLoc):
         self.loc[0] = (cameraLoc[0]*(1-self.movingSpeed)) + self.org_loc[0]
-
-
-class Plane:
-    def __init__(self,loc,size,vision):
-        self.loc = loc
-        self.size = size
-        self.vision = vision
-
-    def draw(self):
-        GV.camera.draw(self.vision,self.loc)
-        
-    def animate(self):
-        pass
-    def update(self,cameraLoc):
-        pass
 
 
 class PerspectiveObject:

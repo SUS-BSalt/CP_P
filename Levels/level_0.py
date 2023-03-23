@@ -164,27 +164,40 @@ def createACTModule():
     GV.controller = module_ACT.controller
     GV.moduleList.append(module_ACT)
     GV.scence = Scence.Scence()
-    appendObjToScence(Scence.BackgroundImage([0,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\backGround_0.png"),0))
-    appendObjToScence(Scence.BackgroundImage([500,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\mid_2.png"),0.2))
-    appendObjToScence(Scence.BackgroundImage([600,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\mid_3.png"),0.3))
+    appendObjToScence(Scence.Plane([0,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\backGround_0.png"),0))
+    appendObjToScence(Scence.Plane([500,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\mid_2.png"),0.2))
+    appendObjToScence(Scence.Plane([600,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\mid_3.png"),0.3))
     
 
     #appendObjToScence(Scence.BackgroundImage([0,0],(1280,720),pygame.image.load("Source\\test\\testScence.png"),0))
-    
-    appendObjToScence(Scence.BackgroundImage([0,0],(538,188),pygame.image.load("Source\\Scence\\level_01\\obj\\02_1.png"),0.95))
+
+
+    appendObjToScence(Scence.Plane([500,0],(108,361),pygame.image.load("Source\\Scence\\level_01\\obj\\02_11.png"),0.55))
+    appendObjToScence(Scence.Plane([0,0],(538,188),pygame.image.load("Source\\Scence\\level_01\\obj\\02_1.png"),0.95))
     appendObjToScence(Scence.PerspectiveObject([538,0],(461,361),[0,0],[1178,0],"right",pygame.image.load("Source\\Scence\\level_01\\obj\\02_2.png"),0.95))
     
     appendObjToScence(Scence.PerspectiveObject([1376,-37],(447,397),[-351,0],[716,0],"left",pygame.image.load("Source\\Scence\\level_01\\obj\\04_01.png"),1))
     
     appendObjToScence(Scence.PerspectiveObject([961,115],(188,245),[341,188],[1610,188],"right",pygame.image.load("Source\\Scence\\level_01\\obj\\01_2.png"),1))
-    appendObjToScence(Scence.PerspectiveObject([1221,160],(118,245),[-158,188],[600,188],"left",pygame.image.load("Source\\Scence\\level_01\\obj\\04_0.png"),1))
-    appendObjToScence(Scence.BackgroundImage([940,228],(252,133),pygame.image.load("Source\\Scence\\level_01\\obj\\03_1.png"),0.95))
+    appendObjToScence(Scence.PerspectiveObject([1221,166],(118,195),[-158,188],[600,188],"left",pygame.image.load("Source\\Scence\\level_01\\obj\\04_0.png"),1))
+    appendObjToScence(Scence.Plane([940,228],(252,133),pygame.image.load("Source\\Scence\\level_01\\obj\\03_1.png"),0.95))
     
-    appendObjToScence(Scence.Plane([0,118],(981,243),pygame.image.load("Source\\Scence\\level_01\\obj\\01_1.png")))
+    appendObjToScence(Scence.Plane([0,118],(981,243),pygame.image.load("Source\\Scence\\level_01\\obj\\01_1.png"),1))
+
+    #appendObjToScence(Scence.PerspectiveObject([1050,0],(108,361),[600,0],[900,0],"right",pygame.image.load("Source\\Scence\\level_01\\obj\\02_11.png"),0.45))
 
     appendObjToScence(Scence.PerspectiveObject([1667,-37],(722,397),[1027,0],[2389,0],"right",pygame.image.load("Source\\Scence\\level_01\\obj\\04_2.png"),1))
-       
-    appendObjToScence(Scence.Plane([1220,-35],(447,397),pygame.image.load("Source\\Scence\\level_01\\obj\\04_1.png")))
+    
+    appendObjToScence(Scence.Plane([1480,0],(543,361),pygame.image.load("Source\\Scence\\level_01\\obj\\wall_05.png"),0.31))
+
+
+    appendObjToScence(Scence.Plane([1350,145],(179,215),pygame.image.load("Source\\Scence\\level_01\\obj\\combine_01.png"),0.7))
+    appendObjToScence(Scence.Plane([1700,137],(175,224),pygame.image.load("Source\\Scence\\level_01\\obj\\combine_02.png"),0.5))
+
+    appendObjToScence(Scence.Plane([2300,273],(255,87),pygame.image.load("Source\\Scence\\level_01\\obj\\combine_03.png"),0.8))
+
+    appendObjToScence(Scence.Plane([1220,-35],(447,397),pygame.image.load("Source\\Scence\\level_01\\obj\\04_1.png"),1))
+
 
 
     #GV.scence.update(GV.camera.loc)
