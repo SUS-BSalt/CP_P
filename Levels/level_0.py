@@ -200,7 +200,9 @@ def createACTModule():
 
 
 
-    #GV.scence.update(GV.camera.loc)
+    
+    GV.camera.focalOn(module_ACT.player.loc)
+    GV.scence.init(GV.camera.loc)
     return module_ACT
 
 

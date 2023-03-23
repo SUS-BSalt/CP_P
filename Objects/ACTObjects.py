@@ -40,7 +40,9 @@ class ACTModule:
                     case "escape":
                         print("coerciveActingSymbol",self.player.coerciveActingSymbol)
                         print("playLoc",self.player.loc)
+                        print("playerFaceSide",self.player.faceSide)
                         print("cameraLoc",GV.camera.loc)
+                        print("mousePos",GV.camera.mousePos)
                         GV.controller = GV.escMenuModule.controller
                         GV.escMenuModule.activeSituation = True
                         GV.camera.tempCupForCameraLoc = GV.camera.loc

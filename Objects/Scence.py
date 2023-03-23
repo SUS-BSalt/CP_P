@@ -6,7 +6,10 @@ class Scence:
     def __init__(self):
         self.objList = []
         self.tempCameraLocContainer = (0,0)
-        pass
+
+    def init(self,cameraLoc):
+        for obj in self.objList:
+            obj.init(cameraLoc)
 
     def draw(self):
         for obj in self.objList:
@@ -33,6 +36,9 @@ class Plane:
         self.size = size
         self.vision = vision
         self.movingSpeed = movingSpeed
+
+    def init(self,cameraLoc):
+        pass
 
     def draw(self):
         GV.camera.draw(self.vision,self.loc)
@@ -62,14 +68,30 @@ class PerspectiveObject:
         if flag == "right":
             self.blitLoc = self.loc
             self.update = self.updateMethodForRight
-            self.update(appearLoc)
-            print("update")
+            self.init = self.initRightSide
         elif flag == "left":
             self.blitLoc = (self.loc[0] - self.size[0],self.loc[1] - self.size[1])
             self.update = self.updateMethodForLeft
-            self.update(GV.camera.loc)
-        
+            self.init = self.initLeftSide
 
+    def init(self,cameraLoc):
+        pass
+    def initRightSide(self,cameraLoc):
+        if cameraLoc[0] < self.appearLoc[0]:
+            self.vision = pygame.transform.scale(self.org_vision, (0,self.size[1]))
+        elif cameraLoc[0] > self.disappearLoc[0]:
+            self.vision = self.org_vision
+        else:
+            self.updateMethodForRight(cameraLoc)
+    def initLeftSide(self,cameraLoc):
+        if cameraLoc[0] < self.appearLoc[0]:
+            self.vision = self.org_vision 
+        elif cameraLoc[0] > self.disappearLoc[0]:
+            self.vision = pygame.transform.scale(self.org_vision, (0,self.size[1]))
+        else:
+            self.updateMethodForLeft(cameraLoc)
+    
+    
     def draw(self):
         GV.camera.draw(self.vision,self.blitLoc)
     

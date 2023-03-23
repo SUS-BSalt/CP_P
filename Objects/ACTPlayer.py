@@ -48,7 +48,9 @@ class Player:
         self.inputList.clear()
 
     def cameraTracking(self):
-        if self.cameraIsNotCenterSym:
+        if self.currentAction == self.standing:
+            pass
+        elif self.cameraIsNotCenterSym:
             if self.loc[0] > (GV.camera.loc[0] + 680):
                 GV.camera.updateCameraLoc([15,0])
             elif self.loc[0] < (GV.camera.loc[0] + 600):
@@ -59,9 +61,18 @@ class Player:
         elif self.loc[0] > (GV.camera.loc[0] + 800) or self.loc[0] < (GV.camera.loc[0] + 480):
             self.cameraIsNotCenterSym = True
 
-        elif self.currentAction == self.standing:
-            pass
-        
+    def faceSideCheck(self):
+        if GV.camera.mousePos[0] >= self.loc[0]:
+            if self.faceSide == "l":
+                self.loc[0] += 25
+                self.faceSide = "r"
+                return True
+        else:
+            if self.faceSide == "r":
+                self.loc[0] -= 25
+                self.faceSide = "l"
+                return True
+        return False
 
 
     def act(self):
@@ -92,7 +103,11 @@ class Player:
                 self.actionDistributor()
                 #print(self.loc[0],GV.getMousePos()[0])
                 self.inputList.clear()
-
+            
+            GV.camera.getMousePos()
+            if self.faceSideCheck():
+                self.resetAction()
+                pass
 
             #如果输入列表不为空，执行输入信号，归零计时器，重置动作
 
@@ -112,7 +127,7 @@ class Player:
         self.timer = 0
         if self.rightMoveSymbol == True:
             #向右走
-            if GV.camera.getMousePos()[0] >= self.loc[0]:
+            if self.faceSide == "r":
                 #向右走，面向右
                 if self.shiftSymbol == True:
                     #向右走，面向右，奔跑
@@ -126,7 +141,7 @@ class Player:
                 pass
         elif self.leftMoveSymbol == True:
             #向左走
-            if GV.camera.getMousePos()[0] >= self.loc[0]:
+            if self.faceSide == "r":
                 #向左走，面向右，后退
                 self.faceSide = "r"
                 pass
@@ -150,7 +165,7 @@ class Player:
         if "a" in self.inputList:
             #攻击
             self.eventList.append("a")
-            if GV.camera.getMousePos()[0] >= self.loc[0]:
+            if self.faceSide == "r":
                 #向右攻击
                 if self.faceSide == "l":
                     #向右攻击，面向左，回身攻击
@@ -184,7 +199,7 @@ class Player:
         elif "d" in self.inputList:
             #防御
             self.eventList.append("d")
-            if GV.camera.getMousePos()[0] >= self.loc[0]:
+            if self.faceSide == "r":
                 #向右防御
                 pass
             else:
@@ -193,11 +208,8 @@ class Player:
 
         elif "r" in self.inputList:
             #向右走
-            if GV.camera.getMousePos()[0] >= self.loc[0]:
-                #向右走，鼠标也在右边
-                if self.faceSide == "l":
-                    self.faceSide = "r"
-                    self.loc[0] += 25
+            if self.faceSide == "r":
+                #向右走，面向右
                 if self.shiftSymbol == True:
                     #向右走，面向右，向前冲刺右！
                     pass
@@ -220,9 +232,8 @@ class Player:
 
         elif "l" in self.inputList:
             #向左走
-            if GV.camera.getMousePos()[0] >= self.loc[0]:
-                #向左走，鼠标在右边
-                self.faceSide = "r"
+            if self.faceSide == "r":
+                #向左走，面向右
                 if self.shiftSymbol == True:
                     #向左走，面向右，向后闪身左！
                     pass
@@ -231,9 +242,6 @@ class Player:
                     pass
             else:
                 #向左走，鼠标在左
-                if self.faceSide == "r":
-                    self.faceSide = "l"
-                    self.loc[0] -= 25
                 if self.shiftSymbol == True:
                     #向左走，面向左，向前冲刺左！
                     pass
@@ -245,7 +253,7 @@ class Player:
         elif "keyUP" in self.inputList:
             if self.rightMoveSymbol == True:
                 #向右走
-                if GV.camera.getMousePos()[0] >= self.loc[0]:
+                if self.faceSide == "r":
                     #向右走，面向右
                     if self.shiftSymbol == True:
                         #向右走，面向右，奔跑
@@ -259,9 +267,8 @@ class Player:
                     pass
             elif self.leftMoveSymbol == True:
                 #向左走
-                if GV.camera.getMousePos()[0] >= self.loc[0]:
+                if self.faceSide == "r":
                     #向左走，面向右，后退
-                    self.faceSide = "r"
                     pass
                 else:
                     #向左走，面向左
