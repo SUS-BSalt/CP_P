@@ -50,9 +50,9 @@ class Player:
     def cameraTracking(self):
         if self.cameraIsNotCenterSym:
             if self.loc[0] > (GV.camera.loc[0] + 680):
-                GV.camera.updateCameraLoc([10,0])
+                GV.camera.updateCameraLoc([15,0])
             elif self.loc[0] < (GV.camera.loc[0] + 600):
-                GV.camera.updateCameraLoc([-10,0])
+                GV.camera.updateCameraLoc([-15,0])
             else:
                 self.cameraIsNotCenterSym = False
 
@@ -62,11 +62,6 @@ class Player:
         elif self.currentAction == self.standing:
             pass
         
-        elif self.rightMoveSymbol:
-            GV.camera.updateCameraLoc([self.cameraMovingSpeed,0])
-
-        elif self.leftMoveSymbol:
-            GV.camera.updateCameraLoc([self.cameraMovingSpeedToLeft,0])
 
 
     def act(self):
@@ -236,7 +231,9 @@ class Player:
                     pass
             else:
                 #向左走，鼠标在左
-                self.faceSide = "l"
+                if self.faceSide == "r":
+                    self.faceSide = "l"
+                    self.loc[0] -= 25
                 if self.shiftSymbol == True:
                     #向左走，面向左，向前冲刺左！
                     pass
@@ -415,6 +412,7 @@ class Walking:
         #self.act0_timeStampList = [30,60,90,120]
         self.act0_movingSteps = [0,24,72,0,0,24]
         self.act0_picLocRectify = [(22,200),(14,200),(64,200),(36,200)]
+        self.cameraMovingSpeed = 3.1
 
         self.currentFrame = 0
 
@@ -446,6 +444,7 @@ class Walking:
         self.timeStampList = self.act0_timeStampList
         self.movingSteps = self.act0_movingSteps
         self.picLocRectify = self.act0_picLocRectify
+        self.cameraMovingSpeed *= -1
 
         return self
 
@@ -458,13 +457,13 @@ class Walking:
 
     def act(self):
         self.master.timer += 1
+        GV.camera.updateCameraLoc((self.cameraMovingSpeed,0))
         
         if self.master.timer >= self.timeStampList[-1]:
             self.master.timer = 0
             self.master.loc[0] += self.movingSteps[-1]
             self.locatedPicLoc(self.picLocRectify[-1])
             self.init()
-            #GV.camera.updateCameraLoc(self.master.loc)
 
         elif self.master.timer >= self.timeStampList[self.currentFrame]:
 

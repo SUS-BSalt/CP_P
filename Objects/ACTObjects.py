@@ -94,7 +94,6 @@ class ACTModule:
         pass
     def draw(self):
         GV.camera.cameraLocOnThatFrame = tuple(GV.camera.loc)
-        GV.camera.cameraShot.fill((255,255,255))
         GV.scence.update(GV.camera.loc)
         GV.scence.draw()
         GV.camera.draw(self.player.redPoint, self.player.loc)
