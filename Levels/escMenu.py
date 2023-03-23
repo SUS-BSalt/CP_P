@@ -32,6 +32,7 @@ escMenu.frameList.append(pygame.image.load("Source/UI/StartMenu.png"))
 
 def backMethod():
     GV.controller = GV.tempCupForModule.controller
+    GV.tempCupForModule.activeSituation = True
     GV.camera.loc = GV.camera.tempCupForCameraLoc
     
     GV.moduleList.remove(GV.escMenuModule)

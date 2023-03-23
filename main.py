@@ -61,6 +61,7 @@ class MainGame:
         sys.exit()
 
     def cameraLoop(self):
+        pass
         "负责"
 
 
