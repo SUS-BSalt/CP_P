@@ -76,11 +76,10 @@ class MainGame:
                 module.animate()
             
             #print(' ')
-            self.timer += 1
+            """self.timer += 1
             if self.timer >= 50:
                 print(self.logicLoopclock.get_fps(),self.drawLoopclock.get_fps(),self.animateLoopclock.get_fps())
-                self.timer = 0
-
+                self.timer = 0"""
 
 
 
