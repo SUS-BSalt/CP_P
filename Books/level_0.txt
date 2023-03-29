@@ -1,6 +1,6 @@
 《END》
 $[???]时候到了，执行四十四号任务
-《appearblackHair》[blackHair]...
-[blackHair]《face02blackHair》?!
-[blackHair]《face01blackHair》YES,Master
+《appearAzure》[Azure]...
+[Azure]《face02Azure》?!
+[Azure]《face01Azure》YES,Master
 《END》

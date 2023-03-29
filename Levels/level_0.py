@@ -91,7 +91,7 @@ def createAVGModule():
     #（人物）
 
     #（人物）
-    blackHair = AVGObjects.Character(size=[150,200],loc=[700,270],color = (200,200,200))
+    Azure = AVGObjects.Character(size=[150,200],loc=[700,270],color = (200,200,200))
     #（表情1）
     expressions = AVGObjects.Expression()
 
@@ -108,7 +108,7 @@ def createAVGModule():
     expressions.mouth.frameList.append(pygame.image.load("Source/test/transparent.png"))
     expressions.mouth.frameList.append(pygame.image.load("Source/test/transparent.png"))
 
-    blackHair.expressionList.append(expressions)
+    Azure.expressionList.append(expressions)
     #（表情1）
     #（表情2）
     expressions = AVGObjects.Expression()
@@ -126,7 +126,7 @@ def createAVGModule():
     expressions.mouth.frameList.append(pygame.image.load("Source/test/transparent.png"))
     expressions.mouth.frameList.append(pygame.image.load("Source/test/transparent.png"))
 
-    blackHair.expressionList.append(expressions)
+    Azure.expressionList.append(expressions)
     #（表情2）
     #（表情3）
     expressions = AVGObjects.Expression()
@@ -144,12 +144,12 @@ def createAVGModule():
     expressions.mouth.frameList.append(pygame.image.load("Source/test/transparent.png"))
     expressions.mouth.frameList.append(pygame.image.load("Source/test/transparent.png"))
 
-    blackHair.expressionList.append(expressions)
+    Azure.expressionList.append(expressions)
     #（表情3）
-    blackHair.init()
-    blackHair.setExpression(0)
+    Azure.init()
+    Azure.setExpression(0)
 
-    module_AVG.characterDict["blackHair"] = blackHair
+    module_AVG.characterDict["Azure"] = Azure
     #（人物）
 
     GV.moduleList.append(module_AVG)
@@ -165,7 +165,7 @@ def createACTModule():
     GV.moduleList.append(module_ACT)
     GV.scence = Scence.Scence()
     appendObjToScence(Scence.Plane([0,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\backGround_0.png"),0))
-    appendObjToScence(Scence.Plane([500,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\mid_2.png"),0.2))
+    appendObjToScence(Scence.Plane([180,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\mid_2.png"),0.2))
     appendObjToScence(Scence.Plane([600,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\mid_3.png"),0.3))
     
 
