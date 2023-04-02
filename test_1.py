@@ -1,21 +1,21 @@
-class PerspectiveObject:
-    def __init__(self,loc,appearLoc,disappearLoc,flag):
-        self.loc = loc
-        self.appearLoc = appearLoc
-        self.disappearLoc = disappearLoc
-        if flag == "right":
-            self.update = self.updateMethodForRight
-        elif flag == "left":
-            self.update = self.updateMethodForLeft
-    
-    def update(self):
-        pass
-    def updateMethodForRight(self):
-        print("right")
-        pass
-    def updateMethodForLeft(self):
-        print("left")
-        pass
+import time
+import random
+pre = 0 
+beg = 0
 
-ssisissi = PerspectiveObject((1,1),(1,1),(1,1),"right")
-ssisissi.update()
+while True:
+    pre = beg
+    beg = time.perf_counter()
+    time.sleep(0.2)
+    end = time.perf_counter()
+    differ = end - beg
+    print(differ)
+
+    """if differ < 1:
+        print(differ,beg - pre)
+        time.sleep(1 - differ)
+    else:
+        print(differ,beg - pre)
+        print("lowFPS!")"""
+    
+    

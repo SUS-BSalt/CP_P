@@ -5,7 +5,7 @@ import Objects.SysObjects as SysObjects
 import Objects.visionObj as visionObj
 import globalValue as GV
 import sys
-
+import time
 
 #我将注释写在其描述对象的下一行或，描述代码块的注释在其起始条件语句同缩进的代码块尾，也就是说每行注释描述的都是它上面的代码
 
@@ -15,25 +15,50 @@ class MainGame:
     def __init__(self):
 
         GV.sysSymbol.set("gameRun",True)
-        
+        self.logicLoop_Pre_FrameTimeSnape = 0
+        self.logicLoop_Beg_FrameTimeSnape = 0
+        self.logicLoop_End_FrameTimeSnape = 0
+        self.Rectify_frameGapTime = 1 / GV.settings.logicLoopFps
+        self.timer = 0
 
 
 
     
     def logicLoop(self):
         """#逻辑循环，包括控制逻辑与动画"""
-        self.logicLoopclock = pygame.time.Clock()
         while GV.sysSymbol.get("gameRun"):
             #循环本体
-            self.logicLoopclock.tick(GV.settings.logicLoopFps)
-            #保持循环的fps
+            #self.logicLoopclock.tick(GV.settings.logicLoopFps)
             
+            #维持FPS频率的第一块代码
+            self.logicLoop_Beg_FrameTimeSnape = time.perf_counter()
+            self.timer += 1
+            if self.timer == GV.settings.logicLoopFps:
+                if self.logicLoop_Beg_FrameTimeSnape - self.logicLoop_Pre_FrameTimeSnape > 1.05:
+                    self.Rectify_frameGapTime -= 0.001
+                elif self.logicLoop_Beg_FrameTimeSnape - self.logicLoop_Pre_FrameTimeSnape < 0.95:
+                    self.Rectify_frameGapTime += 0.001
+                print(self.logicLoop_Beg_FrameTimeSnape - self.logicLoop_Pre_FrameTimeSnape)
+                self.logicLoop_Pre_FrameTimeSnape = self.logicLoop_Beg_FrameTimeSnape
+                self.timer = 0
+            #维持FPS频率的第一块代码
+                
+            #游戏逻辑
             GV.controller()
             #处理输入信号
             
             for module in GV.moduleList:
                 if module.activeSituation == True:
                     module.act()
+            #游戏逻辑
+
+            #维持FPS频率的第二块代码
+            self.logicLoop_End_FrameTimeSnape = time.perf_counter()
+            differ = self.logicLoop_End_FrameTimeSnape - self.logicLoop_Beg_FrameTimeSnape
+            if differ > self.Rectify_frameGapTime:
+                continue
+            time.sleep(self.Rectify_frameGapTime - differ)
+            #维持FPS频率的第二块代码
 
         sys.exit()
 
