@@ -1,21 +1,23 @@
-import time
-import random
-pre = 0 
-beg = 0
+import pygame
+pygame.init()
+import threading
 
-while True:
-    pre = beg
-    beg = time.perf_counter()
-    time.sleep(0.2)
-    end = time.perf_counter()
-    differ = end - beg
-    print(differ)
+pygame.display.set_caption("CP_P")
+screen = pygame.display.set_mode((1280,720))
 
-    """if differ < 1:
-        print(differ,beg - pre)
-        time.sleep(1 - differ)
-    else:
-        print(differ,beg - pre)
-        print("lowFPS!")"""
+ss = pygame.image.load("Source\\test\\testScence.png")
+dd = pygame.image.load("Source\\test\\testarea_01.png")
+def loop_0():
+    while True:
+        screen.blit(ss,(0,0))
+        
+def loop_1():
+     while True:
+          screen.blit(dd,(50,0))
+          pygame.display.update()
     
-    
+def runningStart():
+        thread_01 = threading.Thread(target = loop_0)
+        thread_01.start()
+        loop_1()
+runningStart()

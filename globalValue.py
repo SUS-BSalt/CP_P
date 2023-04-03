@@ -43,7 +43,8 @@ escMenuModule = None
 tempCupForModule = None
 UIfont_01 = pygame.font.Font(textSettings.charType,40)
 UIfont_02 = pygame.font.Font(textSettings.charType,50)
-toDoList = []
+UIfont_03 = pygame.font.Font(textSettings.charType,30)
+
 #把level里的紧跟事件加上判断写成函数，丢进这个list让逻辑线程循环检测是否应该执行
 
 controller = None

@@ -2,11 +2,13 @@ import pygame
 import globalValue as GV
 import Objects.visionObj as visionObj
 import Objects.ACTPlayer as ACTPlayer
+import Objects.ACTUI as ACTUI
 
 class ACTModule:
-    def __init__(self):
+    def __init__(self,book):
         self.activeSituation = True
-
+        self.bottomUI = ACTUI.bottomUI((1280,360),(0,0),self,book)
+        
         self.enemyList = []
 
         self.timer = 0
@@ -89,6 +91,7 @@ class ACTModule:
             for enemy in self.enemyList:
                 enemy.act()
         self.player.act()
+        self.bottomUI.act()
 
 
 
@@ -100,9 +103,11 @@ class ACTModule:
         GV.scence.draw()
         GV.camera.draw(self.player.redPoint, self.player.loc)
         self.player.draw()
+        self.bottomUI.draw()
 
         
     def animate(self):
+        self.bottomUI.animate()
         
         pass
         #print(self.camera.loc)

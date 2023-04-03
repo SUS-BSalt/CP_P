@@ -160,7 +160,7 @@ def appendObjToScence(obj):
     GV.scence.objList.append(obj)
 
 def createACTModule():
-    module_ACT = ACTObjects.ACTModule()
+    module_ACT = ACTObjects.ACTModule(open('books/level_0_act.txt','r',encoding='UTF-8'))
     GV.controller = module_ACT.controller
     GV.moduleList.append(module_ACT)
     GV.scence = Scence.Scence()
