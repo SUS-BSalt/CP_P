@@ -34,11 +34,17 @@ class MainGame:
             self.logicLoop_Beg_FrameTimeSnape = time.perf_counter()
             self.timer += 1
             if self.timer == GV.settings.logicLoopFps:
-                if self.logicLoop_Beg_FrameTimeSnape - self.logicLoop_Pre_FrameTimeSnape > 1.05:
-                    self.Rectify_frameGapTime -= 0.001
-                elif self.logicLoop_Beg_FrameTimeSnape - self.logicLoop_Pre_FrameTimeSnape < 0.95:
-                    self.Rectify_frameGapTime += 0.001
-                print(self.logicLoop_Beg_FrameTimeSnape - self.logicLoop_Pre_FrameTimeSnape)
+                tiemGap = self.logicLoop_Beg_FrameTimeSnape - self.logicLoop_Pre_FrameTimeSnape
+                if tiemGap > 1.1:
+                    self.Rectify_frameGapTime -= 0.0015
+                elif tiemGap > 1.01:
+                    self.Rectify_frameGapTime -= 0.0002
+                elif tiemGap < 0.9:
+                    self.Rectify_frameGapTime += 0.0015
+                elif tiemGap < 0.99:
+                    self.Rectify_frameGapTime += 0.0002
+                print(tiemGap)
+                print(round(1/(tiemGap)*GV.settings.logicLoopFps),"FPS")
                 self.logicLoop_Pre_FrameTimeSnape = self.logicLoop_Beg_FrameTimeSnape
                 self.timer = 0
             #维持FPS频率的第一块代码
@@ -71,7 +77,7 @@ class MainGame:
             #0循环本体
             self.drawLoopclock.tick(GV.settings.drawLoopFps)
             #保持循环的fps
-            GV.playGround.fill((255,255,255))
+            #GV.playGround.fill((255,255,255))
             #刷新屏幕，如果有了全屏性的playGround就不用了
             
             for module in GV.moduleList:
@@ -106,6 +112,7 @@ class MainGame:
             if self.timer >= 50:
                 print(self.logicLoopclock.get_fps(),self.drawLoopclock.get_fps(),self.animateLoopclock.get_fps())
                 self.timer = 0"""
+        sys.exit()
 
 
 

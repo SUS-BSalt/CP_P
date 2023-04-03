@@ -10,7 +10,6 @@ textSettings = setting.TextSettings()
 
 pygame.display.set_caption("CP_P")
 screen = pygame.display.set_mode(settings.windowsize,settings.windowflags)
-playGround = pygame.Surface((0,0))
 
 
 
