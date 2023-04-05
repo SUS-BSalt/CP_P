@@ -47,7 +47,12 @@ class Manage_Level_0:
                 self.followingEventList.remove(self.check_0)
                 self.followingEventList.append(self.check_1)
 
+
     def check_1(self):
+        if self.ACTModule.player.loc[0] >= 1500:
+            for word in self.ACTModule.bottomUI.wordsList:
+                if word.label == 1:
+                    word.render((240,50,50))
         pass
 
 

@@ -26,25 +26,28 @@ class MainGame:
     
     def logicLoop(self):
         """#逻辑循环，包括控制逻辑与动画"""
+        fpsRectifyFrequency = 50
+        """每20帧修正一次FPS"""
+        fpsRectifyTime = fpsRectifyFrequency/GV.settings.logicLoopFps
         while GV.sysSymbol.get("gameRun"):
             #循环本体
             #self.logicLoopclock.tick(GV.settings.logicLoopFps)
-            
             #维持FPS频率的第一块代码
             self.logicLoop_Beg_FrameTimeSnape = time.perf_counter()
             self.timer += 1
-            if self.timer == GV.settings.logicLoopFps:
+            
+            if self.timer == fpsRectifyFrequency:
                 tiemGap = self.logicLoop_Beg_FrameTimeSnape - self.logicLoop_Pre_FrameTimeSnape
-                if tiemGap > 1.1:
-                    self.Rectify_frameGapTime -= 0.0015
-                elif tiemGap > 1.01:
-                    self.Rectify_frameGapTime -= 0.0002
-                elif tiemGap < 0.9:
-                    self.Rectify_frameGapTime += 0.0015
-                elif tiemGap < 0.99:
-                    self.Rectify_frameGapTime += 0.0002
-                print(tiemGap)
-                print(round(1/(tiemGap)*GV.settings.logicLoopFps),"FPS")
+                if tiemGap > fpsRectifyTime*1.1:
+                    self.Rectify_frameGapTime -= 0.001
+                elif tiemGap > fpsRectifyTime*1.01:
+                    self.Rectify_frameGapTime -= 0.00001
+                elif tiemGap < fpsRectifyTime*0.9:
+                    self.Rectify_frameGapTime += 0.001
+                elif tiemGap < fpsRectifyTime*0.99:
+                    self.Rectify_frameGapTime += 0.00001
+                #print(tiemGap)
+                #print(round(1/(tiemGap)*fpsRectifyFrequency),"FPS")
                 self.logicLoop_Pre_FrameTimeSnape = self.logicLoop_Beg_FrameTimeSnape
                 self.timer = 0
             #维持FPS频率的第一块代码
@@ -82,8 +85,8 @@ class MainGame:
             
             for module in GV.moduleList:
                 module.draw()
-
-            
+            #GV.camera.cameraShot_UI.set_alpha(255)
+            #GV.camera.cameraShot.blit(GV.camera.cameraShot_UI,(0,0))
             GV.screen.blit(pygame.transform.scale(GV.camera.cameraShot,GV.settings.windowsize),GV.camera.cameraLocRectify)
             #摄像机相关
 

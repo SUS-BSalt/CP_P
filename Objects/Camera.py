@@ -9,6 +9,7 @@ class Camera:
         self.tempCupForCameraLoc = [0,0]
         self.size = [1280,720]
         self.cameraShot = pygame.Surface(self.size)
+        self.cameraShot_UI = pygame.Surface(self.size)#,flags=pygame.SRCALPHA
 
         self.cameraLocRectify = [0,0]
         self.cameraScaleIndex = GV.settings.windowsize[0] / GV.settings.org_windowsize[0]
@@ -23,6 +24,9 @@ class Camera:
 
     def draw(self,vision,objLocOnPlayGround):
         self.cameraShot.blit(vision,(objLocOnPlayGround[0] - self.cameraLocOnThatFrame[0],objLocOnPlayGround[1] - self.cameraLocOnThatFrame[1]))
+
+    def draw_UI(self,vision,loc):
+        self.cameraShot.blit(vision,(loc[0],loc[1]))
 
     def getMousePos(self):
         mousePosX = (pygame.mouse.get_pos()[0] + self.loc[0] - self.cameraLocRectify[0])/self.cameraScaleIndex

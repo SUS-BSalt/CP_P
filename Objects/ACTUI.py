@@ -5,8 +5,11 @@ class bottomUI:
     def __init__(self,size,loc,ACTModule,book):
         self.master = ACTModule
         self.workingSituation = True
+        self.rollingTextSymbol = False
+        self.rollingTextSpeed = 10
 
         self.backgroundPic = pygame.image.load("Source\\UI\\ACTbottomUI.png")
+        self.backgroundMask_0 = pygame.image.load("Source\\UI\\mask_0.png")
 
         self.sleepSwitch = False
         self.sleepTime = 50
@@ -41,35 +44,47 @@ class bottomUI:
 
         self.label = 0
 
+        self.wordDeadline = 10
         self.wordsList = []
 
     def act(self):
         if self.workingSituation == True :
                 #自身活跃
-                if self.sleepSwitch == True :
-                    #（睡眠的方法）自身活跃，有睡眠
-                    self.timer += 1
-                    if self.timer >= self.sleepTime:
-                        self.sleepSwitch = False
-                        self.timer = 0
-                    #（睡眠的方法）
-                else:
-                    #（常规输出的方法）自身活跃，无睡眠
-                    self.timer += 1
-                    if self.timer >= self.printSpeed:
-                        self.reader()
-                        self.timer = 0
-                    #（常规输出的方法）
+            if self.sleepSwitch == True :
+                #（睡眠的方法）自身活跃，有睡眠
+                self.timer += 1
+                if self.timer >= self.sleepTime:
+                    self.sleepSwitch = False
+                    self.timer = 0
+                #（睡眠的方法）
+            else:
+                #（常规输出的方法）自身活跃，无睡眠
+                self.timer += 1
+                if self.timer >= self.printSpeed:
+                    self.reader()
+                    self.timer = 0
+                #（常规输出的方法）
+        if self.rollingTextSymbol == True:
+            self.changeWordYLoc(self.rollingTextSpeed*-1)
+            #print(self.wordsList[-1].loc[1])
+            self.deleteWord(self.wordDeadline)
+            if self.wordsList[-1].loc[1] < 77:
+                self.rollingTextSymbol = False
+                self.deleteWord(self.wordDeadline)
+    
     def draw(self):
-        GV.camera.cameraShot.blit(self.backgroundPic,(0,360))
+        GV.camera.draw_UI(self.backgroundPic,(0,360))
         for word in self.wordsList:
-            GV.camera.cameraShot.blit(word.vision,(word.loc[0],word.loc[1]+360))
-        pass
+            GV.camera.draw_UI(word.vision,(word.loc[0],word.loc[1]+360))
+        GV.camera.draw_UI(self.backgroundMask_0,(0,360))
+
     def animate(self):
+        for word in self.wordsList:
+            word.animate()
         pass
 
-    def printer(self, msg, label, color = (120,120,120)):
-        newWord = singleWord(self.currentWordLoc,msg,label,color)
+    def printer(self, msg, color = (255,255,255), label = 0):
+        newWord = singleWord(self.currentWordLoc,msg,color,label)
         newWord.render(color)
         self.wordsList.append(newWord)
 
@@ -81,6 +96,7 @@ class bottomUI:
     def wrapText(self):
         self.currentWordLoc[0] = self.loc[0] + self.margins
         self.currentWordLoc[1] += self.textLineGap + self.textSize
+        self.deleteWord(self.wordDeadline)
         #换行的判断及执行
 
     def textEffectMatcher(self):
@@ -104,10 +120,26 @@ class bottomUI:
                 self.wrapText()
             case _ if self.textEffect[:3] == "lab":
                 self.label = int(self.textEffect[3:])
+            case _ if self.textEffect[:4] == "roll":
+                self.rollingTextSymbol = True
+                self.rollingTextSpeed = int(self.textEffect[4:])
             case "yee":
                 self.workingSituation = False
+                #暂停读取文字
             case _ :
                 print("未知效果"+self.textEffect)
+
+    def changeWordYLoc(self,rectify):
+        for word in self.wordsList:
+            word.loc[1] += rectify
+        self.currentWordLoc[1] += rectify
+    
+    def deleteWord(self,deadline):
+        for word in self.wordsList:
+            if word.loc[1] < deadline:
+                self.wordsList.remove(word)
+        #print([word.loc[1] for word in self.wordsList])
+
 
     def reader(self):
         try:
@@ -116,26 +148,37 @@ class bottomUI:
                 case "$":
                     #输出下一个字符
                     self.currentWord += 1
-                    self.printer(self.currentSentence[self.currentWord], self.label)
+                    self.printer(self.currentSentence[self.currentWord], label = self.label)
                     self.currentWord += 1
                 case "《":
                     self.textEffectSwitch = True
                     self.textEffectMatcher()
                 case _:
-                    self.printer(self.currentSentence[self.currentWord], self.label)
+                    self.printer(self.currentSentence[self.currentWord], label = self.label)
                     self.currentWord += 1
         except:
             self.currentSentence = self.book.readline().strip()
             self.currentWord = 0
             self.wrapText()
+    
+
 
 class singleWord:
-    def __init__(self,loc,char,label = 0, color = (120,120,120)):
+    def __init__(self,loc,char, color, label = 0):
         self.activeSituation = True
+
+        self.colorGradientSym = True
+        self.colorGradientSpeed = 20
+
         self.loc = list(loc)
         self.char = char
         self.label = label
-        self.defaultColor = color
+        
+        self.color_default = (80,80,80)
+        self.color_current = color
+        self.color_org = self.color_current
+        self.color_fin = self.color_default
+        
         self.timer = 0
         self.frameList = []
 
@@ -144,8 +187,26 @@ class singleWord:
     def draw(self):
         pass
     def animate(self):
-        pass
+        if self.colorGradientSym == True:
+            self.timer += 1
+            self.color_current = self.colorGradientOnTime(self.color_org,self.color_fin)
+
+            if abs(self.color_current[0] - self.color_fin[0]) <= 5 and \
+                abs(self.color_current[1] - self.color_fin[1]) <= 5 and \
+                abs(self.color_current[2] - self.color_fin[2]) <= 5:
+                self.color_current = self.color_fin
+                self.colorGradientSym = False
+                self.timer = 0
+
+            self.render(self.color_current)
+            #print("yee",self.color_current)
+
+
     def render(self,color):
         self.vision = GV.UIfont_03.render(self.char,True,color)
         self.size = self.vision.get_size()
-
+    def colorGradientOnTime(self,color_org,color_fin):
+        r = int((color_fin[0] - color_org[0]) * (self.timer/self.colorGradientSpeed) + color_org[0])
+        g = int((color_fin[1] - color_org[1]) * (self.timer/self.colorGradientSpeed) + color_org[1])
+        b = int((color_fin[2] - color_org[2]) * (self.timer/self.colorGradientSpeed) + color_org[2])
+        return(r,g,b)

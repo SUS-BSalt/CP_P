@@ -65,9 +65,9 @@ class Menu:
                     GV.controlSymbol.set('click', False)
 
     def draw(self):
-        GV.camera.draw(self.frameList[0],self.loc)
+        GV.camera.draw_UI(self.frameList[0],self.loc)
         for button in self.buttonList:
-            GV.camera.draw(button.vision,button.loc)
+            GV.camera.draw_UI(button.vision,button.loc)
                 
     def animate(self):
         for button in self.buttonList:
