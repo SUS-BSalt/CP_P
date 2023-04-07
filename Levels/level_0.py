@@ -53,6 +53,9 @@ class Manage_Level_0:
             for word in self.ACTModule.bottomUI.wordsList:
                 if word.label == 1:
                     word.render((240,50,50))
+                    word.colorGradientSym = True
+                    word.color_org = (240,50,50)
+            self.followingEventList.remove(self.check_1)
         pass
 
 
@@ -103,7 +106,7 @@ def createAVGModule():
     expressions.body = pygame.image.load('Source/character/Azure/blank/body.jpg')
 
     expressions.eyes = AVGObjects.Eye(loc=[72,51])
-    expressions.eyes.frameList.append(pygame.image.load("Source/test/transparent.png"))
+    expressions.eyes.frameList.append(pygame.image.load("./Source/test/transparent.png"))
     expressions.eyes.frameList.append(pygame.image.load("Source/test/transparent.png"))
     expressions.eyes.frameList.append(pygame.image.load("Source/test/transparent.png"))
 
@@ -169,9 +172,9 @@ def createACTModule():
     GV.controller = module_ACT.controller
     GV.moduleList.append(module_ACT)
     GV.scence = Scence.Scence()
-    appendObjToScence(Scence.Plane([0,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\backGround_0.png"),0))
-    appendObjToScence(Scence.Plane([180,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\mid_2.png"),0.2))
-    appendObjToScence(Scence.Plane([600,0],(1280,720),pygame.image.load("Source\\Scence\\level_01\\slide\\mid_3.png"),0.3))
+    appendObjToScence(Scence.Plane([0,0],(1280,720),pygame.image.load("./Source\\Scence\\level_01\\slide\\backGround_0.png"),0))
+    appendObjToScence(Scence.Plane([180,0],(1280,720),pygame.image.load("./Source\\Scence\\level_01\\slide\\mid_2.png"),0.2))
+    appendObjToScence(Scence.Plane([600,0],(1280,720),pygame.image.load("./Source\\Scence\\level_01\\slide\\mid_3.png"),0.3))
     
 
     #appendObjToScence(Scence.BackgroundImage([0,0],(1280,720),pygame.image.load("Source\\test\\testScence.png"),0))

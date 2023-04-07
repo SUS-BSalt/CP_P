@@ -168,16 +168,18 @@ class singleWord:
         self.activeSituation = True
 
         self.colorGradientSym = True
-        self.colorGradientSpeed = 20
+        self.colorGradientSpeed = 50
+        self.color_default = (80,80,80)
+        self.color_current = color
+        self.color_org = self.color_current
+        self.color_fin = self.color_default
 
         self.loc = list(loc)
         self.char = char
         self.label = label
         
-        self.color_default = (80,80,80)
-        self.color_current = color
-        self.color_org = self.color_current
-        self.color_fin = self.color_default
+
+
         
         self.timer = 0
         self.frameList = []

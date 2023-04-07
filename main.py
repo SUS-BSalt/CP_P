@@ -74,6 +74,7 @@ class MainGame:
 
     def drawLoop(self):
         """#画面循环，基本只负责绘制可见对象"""
+        """还有更新场景2023.4.7"""
         self.drawLoopclock = pygame.time.Clock()
 
         while GV.sysSymbol.get("gameRun"):
