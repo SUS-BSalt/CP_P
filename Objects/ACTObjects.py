@@ -45,7 +45,8 @@ class ACTModule:
                         print("playerFaceSide",self.player.faceSide)
                         print("cameraLoc",GV.camera.loc)
                         print("mousePos",GV.camera.mousePos)
-                        print("word_0",self.bottomUI.wordsList[0].self.colorGradientSym)
+                        #print("word_0",self.bottomUI.wordsList[0].colorGradientSym)
+                        #print("word_float",len(self.bottomUI.floatingWordsList))
                         GV.controller = GV.escMenuModule.controller
                         GV.escMenuModule.activeSituation = True
                         GV.camera.tempCupForCameraLoc = GV.camera.loc

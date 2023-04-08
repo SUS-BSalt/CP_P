@@ -19,6 +19,7 @@ class Manage_Level_0:
         self.internalEventList = []
         self.globalEventList = []
         self.followingEventList = []
+        self.timer = 0
         
     def act(self):
         for checker in self.followingEventList:
@@ -56,7 +57,24 @@ class Manage_Level_0:
                     word.colorGradientSym = True
                     word.color_org = (240,50,50)
             self.followingEventList.remove(self.check_1)
+            self.followingEventList.append(self.check_injured)
+            self.followingEventList.append(self.check_recovery)
         pass
+
+    def check_injured(self):
+        if self.ACTModule.player.loc[0] >= 1700:
+            self.ACTModule.bottomUI.randomPrintSwitch = True
+            self.timer = 0
+            self.followingEventList.remove(self.check_injured)
+            pass
+    
+    def check_recovery(self):
+        if self.ACTModule.player.loc[0] >= 1900:
+            self.ACTModule.bottomUI.recoverSwitch = True
+            self.timer = 0
+            #self.followingEventList.remove(self.check_injured)
+            pass
+    
 
 
 
