@@ -73,6 +73,7 @@ class PerspectiveObject:
             self.blitLoc = (self.loc[0] - self.size[0],self.loc[1] - self.size[1])
             self.update = self.updateMethodForLeft
             self.init = self.initLeftSide
+        self.init(GV.camera.loc)
 
     def init(self,cameraLoc):
         pass

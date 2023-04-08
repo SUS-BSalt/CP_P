@@ -190,6 +190,7 @@ def createACTModule():
     GV.controller = module_ACT.controller
     GV.moduleList.append(module_ACT)
     GV.scence = Scence.Scence()
+    GV.camera.focalOn(module_ACT.player.loc)
     appendObjToScence(Scence.Plane([0,0],(1280,720),pygame.image.load("./Source\\Scence\\level_01\\slide\\backGround_0.png"),0))
     appendObjToScence(Scence.Plane([180,0],(1280,720),pygame.image.load("./Source\\Scence\\level_01\\slide\\mid_2.png"),0.2))
     appendObjToScence(Scence.Plane([600,0],(1280,720),pygame.image.load("./Source\\Scence\\level_01\\slide\\mid_3.png"),0.3))
@@ -227,8 +228,8 @@ def createACTModule():
 
 
     
-    GV.camera.focalOn(module_ACT.player.loc)
-    GV.scence.init(GV.camera.loc)
+    
+    #GV.scence.init(GV.camera.loc)
     return module_ACT
 
 
