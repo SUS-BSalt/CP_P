@@ -1,0 +1,10 @@
+{
+    "character":
+    {
+        "Nancy":
+        {
+            "攻击":"Source\\character\\Azure\\act_Attack",
+            "站立":"Source\\character\\Azure\\act_Standing"
+        }
+    }
+}
