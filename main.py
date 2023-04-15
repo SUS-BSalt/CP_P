@@ -56,45 +56,25 @@ class MainGame:
         fpsRectifyTime = fpsRectifyFrequency/GV.settings.logicLoopFps
         while GV.sysSymbol.get("gameRun"):
             #循环本体
-            #self.logicLoopclock.tick(GV.settings.logicLoopFps)
-            #维持FPS频率的第一块代码
-            self.logicLoop_Beg_FrameTimeSnape = time.perf_counter()
-            
-            self.timer += 1
-            
-            if self.timer == fpsRectifyFrequency:
-                tiemGap = self.logicLoop_Beg_FrameTimeSnape - self.logicLoop_Pre_FrameTimeSnape
-                if tiemGap > fpsRectifyTime*1.1:
-                    self.Rectify_frameGapTime -= 0.001
-                elif tiemGap > fpsRectifyTime*1.01:
-                    self.Rectify_frameGapTime -= 0.00001
-                elif tiemGap < fpsRectifyTime*0.9:
-                    self.Rectify_frameGapTime += 0.001
-                elif tiemGap < fpsRectifyTime*0.99:
-                    self.Rectify_frameGapTime += 0.00001
-                #print(tiemGap)
-                print(round(1/(tiemGap)*fpsRectifyFrequency),"FPS")
-                #print(pygame.time.get_ticks())
-                self.logicLoop_Pre_FrameTimeSnape = self.logicLoop_Beg_FrameTimeSnape
-                self.timer = 0
-            #维持FPS频率的第一块代码
-                
-            #游戏逻辑
+            #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓维持FPS的第一块代码↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+            self.beg_FrameTimer = time.perf_counter()
+            self.fps_Rectify()
+            #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑维持FPS的第一块代码↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+            #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓游戏逻辑↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
             GV.controller()
             #处理输入信号
-            
             for module in GV.moduleList:
                 if module.activeSituation == True:
                     module.act()
-            #游戏逻辑
-
-            #维持FPS频率的第二块代码
-            self.logicLoop_End_FrameTimeSnape = time.perf_counter()
-            differ = self.logicLoop_End_FrameTimeSnape - self.logicLoop_Beg_FrameTimeSnape
-            if differ > self.Rectify_frameGapTime:
+            #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑游戏逻辑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+            #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓维持FPS的第二块代码↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+            self.end_FrameTimer = time.perf_counter()
+            self.differ_FrameTimer = self.end_FrameTimer - self.beg_FrameTimer
+            if self.differ_FrameTimer > self.fps_Span_Rectify:
+                print("Low!")
                 continue
-            time.sleep(self.Rectify_frameGapTime - differ)
-            #维持FPS频率的第二块代码
+            time.sleep(self.fps_Span_Rectify - self.differ_FrameTimer)
+            #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑维持FPS的第二块代码↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
         sys.exit()
 
@@ -173,8 +153,6 @@ class MainGame:
 
     def No_Threading_Loop(self):
         "Fuck threading"
-        self.timer = 0
-
         while GV.sysSymbol.get("gameRun"):
             #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓维持FPS的第一块代码↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
             self.beg_FrameTimer = time.perf_counter()
@@ -200,7 +178,13 @@ class MainGame:
 
     def runningStart(self):
         import Levels.OpeningMenu
-        self.No_Threading_Loop()
+        self.thread_drawLoop = threading.Thread(target = self.drawLoop)
+        self.thread_drawLoop.start()
+        
+        self.thread_animateLoop = threading.Thread(target = self.animateLoop)
+        self.thread_animateLoop.start()
+        
+        self.logicLoop()
 
         
 
