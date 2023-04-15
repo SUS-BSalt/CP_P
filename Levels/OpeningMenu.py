@@ -3,9 +3,15 @@ import Objects.visionObj as visionObj
 import Objects.UI as UI
 import pygame
 
+class Manage_OpeningMenu:
+    def __init__(self):
+        self.activeSituation = True
+        self.internalEventList = []
+        self.globalEventList = []
+        self.followingEventList = []
+        self.timer = 0
 
-GV.playGround = pygame.Surface((3000,720))
-
+    
 openingMenu = UI.UIModule()
 GV.moduleList.append(openingMenu)
 
